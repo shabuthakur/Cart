@@ -1,5 +1,5 @@
 import React from "react";
-import App from "./App";
+
 
 class CartItem extends React.Component{
   constructor()
@@ -15,10 +15,39 @@ class CartItem extends React.Component{
     // this.increaseQuantity=this.increaseQuantity.bind(this);
   }
   increaseQuantity =()=>{           //arrow functions are automatically bind the value of this class
-    console.log('this.state',this.state);
+    // console.log('this.state',this.state);
+    //setState form 1 
+    // this.setState({  //set state is function  that is used from react.component
+    //   qty:this.state.qty +1
+    // }); this is object form
+    
+    //set state form 2
+    this.setState((prevState)=>{
+      return{
+        qty:prevState.qty+1   //this is function state
+      }
+
+    });
+    
+
+  }
+  decreaseQuantity =()=>{
+    const{qty}=this.state; //destructuring
+
+    if(qty === 0){
+      return;
+    }
+
+
+    this.setState((prevState)=>{
+      return{
+        qty:prevState.qty-1
+      }
+    });
+  
   }
   render (){
-    const{price,title,qty}=this.state;
+    const{price,title,qty}=this.state; //destructring 
     return(
       <div className="cart-item">
         <div className="left-block">
@@ -43,6 +72,7 @@ class CartItem extends React.Component{
             alt ="decrease" 
             className="actions-icons" 
             src="https://cdn-icons-png.flaticon.com/512/992/992683.png" 
+            onClick={this.decreaseQuantity}
             />
 
             <img 
